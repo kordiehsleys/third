@@ -1,0 +1,1057 @@
+<![CDATA[<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>小手机 - AI Roleplay OS</title>
+    <link rel="stylesheet" href="index.css">
+<script src="index.js" defer></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 加载界面 -->
+        <section id="loading-screen" class="screen active">
+            <div class="logo-container">
+                <div class="logo">💖</div>
+                <h1 class="brand-name">Little Phone</h1>
+            </div>
+            <div class="loading-bar-container">
+                <div class="loading-bar"></div>
+            </div>
+        </section>
+
+        <!-- 密码设置界面 (首次进入) -->
+        <section id="setup-screen" class="screen">
+            <div class="setup-content" style="padding: 40px 20px; text-align: center;">
+                <h2>设置 6 位数字密码</h2>
+                <p style="margin: 10px 0 30px; opacity: 0.6;">为了保护您的 AI 陪伴空间，请设置访问密码</p>
+                <div class="passcode-display">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+                <div class="keypad" style="margin: 0 auto;">
+                    <button class="key" data-value="1">1</button>
+                    <button class="key" data-value="2">2</button>
+                    <button class="key" data-value="3">3</button>
+                    <button class="key" data-value="4">4</button>
+                    <button class="key" data-value="5">5</button>
+                    <button class="key" data-value="6">6</button>
+                    <button class="key" data-value="7">7</button>
+                    <button class="key" data-value="8">8</button>
+                    <button class="key" data-value="9">9</button>
+                    <button class="key empty"></button>
+                    <button class="key" data-value="0">0</button>
+                    <button class="key delete">⌫</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 锁屏界面 -->
+        <section id="lock-screen" class="screen">
+            <div id="lock-time">00:00</div>
+            <div id="lock-date">1月1日 星期一</div>
+            <div style="margin-top: auto; margin-bottom: 60px; opacity: 0.8; animation: pulse 2s infinite;">点击屏幕解锁</div>
+        </section>
+
+        <!-- 解锁 Overlay -->
+        <div id="unlock-overlay" class="overlay">
+            <div class="setup-content" style="padding: 40px 20px; text-align: center;">
+                <h2>输入密码</h2>
+                <div class="passcode-display" style="margin: 40px auto;">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+                <div class="keypad" style="margin: 0 auto;">
+                    <button class="key" data-value="1">1</button>
+                    <button class="key" data-value="2">2</button>
+                    <button class="key" data-value="3">3</button>
+                    <button class="key" data-value="4">4</button>
+                    <button class="key" data-value="5">5</button>
+                    <button class="key" data-value="6">6</button>
+                    <button class="key" data-value="7">7</button>
+                    <button class="key" data-value="8">8</button>
+                    <button class="key" data-value="9">9</button>
+                    <button class="key empty"></button>
+                    <button class="key" data-value="0">0</button>
+                    <button class="key delete">⌫</button>
+                </div>
+                <button id="cancel-unlock" class="back-btn" style="margin-top: 30px; color: var(--text-muted);">取消</button>
+            </div>
+        </div>
+
+        <!-- 主屏幕 -->
+        <section id="home-screen" class="screen">
+            <div class="status-bar">
+                <span id="status-time">00:00</span>
+                <div class="status-icons">
+                    <span class="icon">📶</span>
+                    <span class="icon">🔋</span>
+                </div>
+            </div>
+
+            <div class="widgets-container">
+                <div class="widget clock-widget">
+                    <div class="widget-time">00:00</div>
+                    <div class="widget-date">1月1日</div>
+                </div>
+                <div class="widget weather-widget">
+                    <div class="weather-info">
+                        <span class="temp">24°</span>
+                        <span class="condition">晴</span>
+                    </div>
+                    <div class="location">上海</div>
+                </div>
+            </div>
+
+            <div class="app-grid">
+                <div class="app-icon" data-app="chat">
+                    <div class="icon-box chat-icon">💖</div>
+                    <span class="app-label">微信</span>
+                </div>
+                <div class="app-icon" data-app="worldbook">
+                    <div class="icon-box worldbook-icon">📔</div>
+                    <span class="app-label">世界书</span>
+                </div>
+                <div class="app-icon" data-app="settings">
+                    <div class="icon-box settings-icon">🍭</div>
+                    <span class="app-label">设置</span>
+                </div>
+                <div class="app-icon" data-app="xhs">
+                    <div class="icon-box" style="background:#ff2442; color:#fff; font-size:24px; font-weight:900;">小</div>
+                    <span class="app-label">小红书</span>
+                </div>
+                <div class="app-icon" data-app="shop">
+                    <div class="icon-box shop-icon">🛍️</div>
+                    <span class="app-label">商城</span>
+                </div>
+                <div class="app-icon" data-app="gallery">
+                    <div class="icon-box gallery-icon">🎨</div>
+                    <span class="app-label">相册</span>
+                </div>
+            </div>
+
+            <div class="dock">
+                <div class="app-icon" data-app="phone">
+                    <div class="icon-box phone-icon">📞</div>
+                </div>
+                <div class="app-icon" data-app="browser">
+                    <div class="icon-box browser-icon">🌈</div>
+                </div>
+                <div class="app-icon" data-app="messages">
+                    <div class="icon-box messages-icon">💌</div>
+                </div>
+                <div class="app-icon" data-app="music">
+                    <div class="icon-box music-icon">🎧</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 设置 App 界面 -->
+        <section id="settings-app" class="screen app-screen">
+            <div class="app-header">
+                <button class="back-btn">〈 返回</button>
+                <h2 class="app-title">设置</h2>
+            </div>
+            <div class="app-content">
+                <div class="settings-group">
+                    <div class="settings-item">
+                        <label>API Base URL</label>
+                        <input type="text" id="api-base" placeholder="https://api.openai.com/v1">
+                    </div>
+                    <div class="settings-item">
+                        <label>API Key</label>
+                        <input type="password" id="api-key" placeholder="sk-...">
+                    </div>
+                    <div class="settings-item">
+                        <label>Model Name</label>
+                        <div class="input-with-action" style="display:flex; gap:8px;">
+                            <select id="api-model-select" style="flex:1">
+                                <option value="">请先拉取模型</option>
+                            </select>
+                            <button id="fetch-models-btn" class="secondary-btn" style="width: auto; padding: 0 15px;">拉取</button>
+                        </div>
+                        <input type="text" id="api-model" placeholder="或手动输入模型名称" style="margin-top:8px;">
+                    </div>
+                </div>
+                <button id="save-settings" class="primary-btn">保存设置</button>
+            </div>
+        </section>
+
+        <!-- 聊天 App 界面 -->
+        <section id="chat-app" class="screen app-screen">
+            <div class="app-header">
+                <div class="header-left">
+                    <button class="back-btn">〈 返回</button>
+                </div>
+                <h2 class="app-title">微信</h2>
+                <div class="header-right">
+                    <button id="add-chat-btn" class="header-action">+</button>
+                </div>
+            </div>
+            <div class="search-bar-container" style="padding:8px 16px;">
+                <input type="text" id="contact-search" placeholder="搜索" style="background:#f2f2f2; border:none; height:36px; border-radius:8px;">
+            </div>
+            <div id="wechat-main-content" class="app-content" style="padding:0;">
+                <!-- 消息列表页 -->
+                <div id="tab-chats" class="wechat-tab-content active">
+                    <div id="contact-list" class="chat-list-content">
+                        <!-- 联系人列表将通过 JS 渲染 -->
+                    </div>
+                </div>
+
+                <!-- 通讯录页 -->
+                <div id="tab-contacts" class="wechat-tab-content">
+                    <div class="contact-list-group">
+                        <div class="contact-item" id="menu-add-contact-trigger">
+                            <div class="contact-avatar" style="background:#fa9d3b; color:white;">👤</div>
+                            <span>新的朋友</span>
+                        </div>
+                        <div class="contact-item" id="menu-create-group-trigger">
+                            <div class="contact-avatar" style="background:#07c160; color:white;">👥</div>
+                            <span>群聊</span>
+                        </div>
+                    </div>
+                    <div id="full-contact-list" class="chat-list-content"></div>
+                </div>
+
+                <!-- 发现页 -->
+                <div id="tab-discover" class="wechat-tab-content">
+                    <div class="settings-group" style="margin-top:10px;">
+                        <div class="contact-item" id="discover-moments-btn">
+                            <div class="contact-avatar" style="background:#f0f0f0; font-size:20px;">🎡</div>
+                            <span>朋友圈</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 我 (个人中心) -->
+                <div id="tab-me" class="wechat-tab-content">
+                    <div class="me-header" id="edit-profile-btn" style="background:white; padding:20px; display:flex; align-items:center; gap:15px; margin-bottom:10px;">
+                        <div id="my-avatar" class="contact-avatar" style="width:60px; height:60px;">👤</div>
+                        <div class="me-info" style="flex:1">
+                            <h3 id="my-nickname-display" style="margin:0">我</h3>
+                            <p id="my-bio-display" style="margin:5px 0 0; font-size:13px; color:var(--text-muted)">设置个性签名</p>
+                        </div>
+                        <div class="me-arrow" style="color:#ccc">〉</div>
+                    </div>
+                    <div class="settings-group">
+                        <div class="contact-item" id="me-wallet-btn">
+                            <div class="contact-avatar" style="background:#f0f0f0; font-size:20px; color:#2ba245">🪙</div>
+                            <span>服务 (钱包)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 微信底部导航栏 -->
+            <div class="wechat-tab-bar">
+                <div class="tab-item active" data-tab="chats">
+                    <div class="tab-icon">💬</div>
+                    <span>微信</span>
+                </div>
+                <div class="tab-item" data-tab="contacts">
+                    <div class="tab-icon">👤</div>
+                    <span>通讯录</span>
+                </div>
+                <div class="tab-item" data-tab="discover">
+                    <div class="tab-icon">🧭</div>
+                    <span>发现</span>
+                </div>
+                <div class="tab-item" data-tab="me">
+                    <div class="tab-icon">👤</div>
+                    <span>我</span>
+                </div>
+            </div>
+
+            <!-- 个人资料编辑弹窗 -->
+            <div id="edit-profile-modal" class="overlay">
+                <div class="app-header">
+                    <button id="close-edit-profile" class="back-btn">取消</button>
+                    <h2 class="app-title">个人信息</h2>
+                    <button id="save-profile-btn" class="header-action">保存</button>
+                </div>
+                <div class="app-content">
+                    <div class="settings-group">
+                        <div class="settings-item">
+                            <label>头像</label>
+                            <div class="avatar-upload-container" style="display:flex; align-items:center; gap:15px;">
+                                <div id="my-avatar-preview" class="contact-avatar">👤</div>
+                                <label for="my-avatar-upload" class="secondary-btn" style="background:var(--secondary-bg); padding:8px 15px; border-radius:4px; font-size:14px; cursor:pointer;">更换头像</label>
+                                <input type="file" id="my-avatar-upload" accept="image/*" style="display:none">
+                            </div>
+                        </div>
+                        <div class="settings-item">
+                            <label>昵称</label>
+                            <input type="text" id="my-nickname-input" placeholder="请输入昵称">
+                        </div>
+                        <div class="settings-item">
+                            <label>个性签名</label>
+                            <input type="text" id="my-bio-input" placeholder="设置你的签名">
+                        </div>
+                        <div class="settings-item">
+                            <label>地区</label>
+                            <input type="text" id="my-region-input" placeholder="设置地区">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 创建群聊/添加联系人菜单 -->
+            <div id="chat-plus-menu" class="plus-menu" style="display:none; position:absolute; top:55px; right:10px; background:white; border-radius:8px; box-shadow:0 2px 10px rgba(0,0,0,0.1); z-index:1001; padding:10px 0; min-width:140px;">
+                <div class="plus-menu-item" id="menu-add-contact" style="padding:10px 20px; cursor:pointer;">添加联系人</div>
+                <div class="plus-menu-item" id="menu-create-group" style="padding:10px 20px; cursor:pointer;">发起群聊</div>
+            </div>
+
+            <!-- 聊天对话详情页 -->
+            <div id="chat-window" class="overlay">
+                <div class="app-header">
+                    <button id="close-chat" class="back-btn">〈 微信</button>
+                    <h2 id="chat-with-name" class="app-title">联系人</h2>
+                    <button id="chat-info-btn" class="header-action">···</button>
+                </div>
+                
+                <!-- 线下模式状态栏 -->
+                <div id="chat-rp-status-bar" class="chat-rp-status-bar" style="display:none; background:rgba(255,255,255,0.9); padding:5px 10px; font-size:12px; border-bottom:1px solid #eee; justify-content:space-between; align-items:center;">
+                    <div class="rp-status-left" style="display:flex; gap:10px;">
+                        <span id="chat-scene-tag" class="status-tag">📍 加载中...</span>
+                        <span id="chat-atmosphere-tag" class="status-tag">✨ 氛围良好</span>
+                    </div>
+                    <div id="open-rp-adv-settings" style="cursor:pointer; opacity:0.6;">⚙️</div>
+                </div>
+
+                <div id="chat-messages" class="chat-messages">
+                    <!-- 消息记录 -->
+                </div>
+                
+                <div id="typing-status" class="typing-status" style="display:none; text-align:center; padding:5px; font-size:12px; color:#999;">对方正在输入...</div>
+
+                <div class="chat-bottom-area" style="background:#f7f7f7; border-top:1px solid #eee;">
+                    <!-- 写作工具栏 -->
+                    <div id="writing-tools-bar" class="writing-tools-bar" style="display:none; padding:10px; gap:8px; overflow-x:auto; border-bottom:1px solid #eee;">
+                        <button class="writing-mode-btn" data-mode="director" style="padding:5px 12px; border-radius:15px; border:1px solid #ddd; background:white; font-size:13px;">导演</button>
+                        <button class="writing-mode-btn" data-mode="continue" style="padding:5px 12px; border-radius:15px; border:1px solid #ddd; background:white; font-size:13px;">续写</button>
+                        <button class="writing-mode-btn" data-mode="polish" style="padding:5px 12px; border-radius:15px; border:1px solid #ddd; background:white; font-size:13px;">润色</button>
+                        <button class="writing-mode-btn" data-mode="inspire" style="padding:5px 12px; border-radius:15px; border:1px solid #ddd; background:white; font-size:13px;">灵感</button>
+                    </div>
+                    
+                    <!-- 导演指令栏 -->
+                    <div id="director-command-bar" class="director-command-bar" style="display:none; padding:8px; gap:8px; flex-wrap:wrap;">
+                        <span class="cmd-chip" data-cmd="发生突发事件" style="padding:4px 10px; background:#eee; border-radius:4px; font-size:12px; cursor:pointer;">🚨 事件</span>
+                        <span class="cmd-chip" data-cmd="切换到下一场景" style="padding:4px 10px; background:#eee; border-radius:4px; font-size:12px; cursor:pointer;">🎬 转场</span>
+                        <span class="cmd-chip" data-cmd="增加肢体动作" style="padding:4px 10px; background:#eee; border-radius:4px; font-size:12px; cursor:pointer;">🎭 动作</span>
+                        <span class="cmd-chip" data-cmd="强化情感表达" style="padding:4px 10px; background:#eee; border-radius:4px; font-size:12px; cursor:pointer;">❤️ 情感</span>
+                    </div>
+
+                    <div class="chat-input-row" style="display:flex; align-items:center; padding:10px; gap:8px;">
+                        <button id="emoji-panel-btn" class="icon-btn" style="background:none; border:none; font-size:24px;">😊</button>
+                        <input type="text" id="chat-input" placeholder="发送消息..." style="flex:1; height:36px; border-radius:4px; border:none; padding:0 10px;">
+                        <button id="ai-get-reply-btn" class="ai-get-reply-btn" style="background:var(--brand-color); color:white; border:none; padding:0 10px; height:36px; border-radius:4px; font-size:13px;">AI</button>
+                        <button id="send-msg-btn" class="wechat-send-btn" style="background:#07c160; color:white; border:none; padding:0 15px; height:36px; border-radius:4px; font-weight:700;">发送</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 聊天设置页 -->
+            <div id="chat-settings-overlay" class="overlay">
+                <div class="app-header">
+                    <button id="close-chat-settings" class="back-btn">〈 返回</button>
+                    <h2 class="app-title">聊天信息</h2>
+                    <button id="save-group-info-btn" class="header-action" style="font-size:16px;">保存</button>
+                </div>
+                <div class="app-content" style="background:#f2f2f2; padding:0;">
+                    <div id="chat-member-grid" style="background:white; padding:15px; display:grid; grid-template-columns:repeat(4, 1fr); gap:15px; margin-bottom:10px;">
+                        <!-- 成员列表 -->
+                    </div>
+                    
+                    <div class="settings-group">
+                        <div class="contact-item" id="view-contact-profile">
+                            <span>查看联系人资料</span>
+                            <span style="margin-left:auto; color:#ccc;">〉</span>
+                        </div>
+                        <div class="contact-item" id="view-role-phone-btn">
+                            <span style="color:var(--brand-color); font-weight:bold;">📱 查看角色手机数据</span>
+                            <span style="margin-left:auto; color:#ccc;">〉</span>
+                        </div>
+                    </div>
+
+                    <div class="settings-group">
+                        <div class="settings-item" style="flex-direction:row; align-items:center;">
+                            <span style="flex:1">线下剧本模式 (Beta)</span>
+                            <div class="switch-container">
+                                <input type="checkbox" id="offline-mode-switch">
+                            </div>
+                        </div>
+                        <div id="offline-mode-quick-settings" class="settings-item" style="display:none; border-top:1px solid #eee;">
+                            <div id="open-adv-rp-menu" style="display:flex; width:100%; align-items:center;">
+                                <span>高级写作设定</span>
+                                <span style="margin-left:auto; color:#ccc;">〉</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="group-only-settings" style="display:none;">
+                        <div class="settings-group">
+                            <div class="settings-item">
+                                <label>群聊名称</label>
+                                <input type="text" id="group-info-name-input" placeholder="未命名">
+                            </div>
+                            <div class="settings-item">
+                                <label>群公告</label>
+                                <textarea id="group-info-notice" rows="3" placeholder="未设置"></textarea>
+                            </div>
+                            <div class="settings-item">
+                                <label>我的昵称</label>
+                                <input type="text" id="group-my-nickname" placeholder="未设置">
+                            </div>
+                        </div>
+                        <div class="settings-group">
+                            <div class="contact-item" id="exit-group-btn" style="justify-content:center; color:#fa5151;">
+                                <span>删除并退出</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-group">
+                        <div class="contact-item" id="clear-chat-history" style="justify-content:center; color:#fa5151;">
+                            <span>清空聊天记录</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 世界书 App 界面 -->
+        <section id="worldbook-app" class="screen app-screen">
+            <div class="app-header">
+                <button class="back-btn">〈 返回</button>
+                <h2 class="app-title">世界书</h2>
+            </div>
+            <div id="worldbook-list" class="app-content">
+                <!-- 列表 -->
+            </div>
+            
+            <!-- 设定详情 -->
+            <div id="worldbook-detail" class="overlay">
+                <div class="app-header">
+                    <button id="close-worldbook-detail" class="back-btn">〈 返回</button>
+                    <h2 id="worldbook-char-name" class="app-title">设定</h2>
+                    <button id="add-entry-btn" class="header-action">+</button>
+                </div>
+                <div id="entry-list" class="app-content">
+                    <!-- 列表 -->
+                </div>
+            </div>
+
+            <!-- 条目编辑 -->
+            <div id="entry-editor" class="overlay">
+                <div class="app-header">
+                    <button id="close-entry-editor" class="back-btn">取消</button>
+                    <h2 class="app-title">编辑条目</h2>
+                    <button id="save-entry-btn" class="header-action">保存</button>
+                </div>
+                <div class="app-content">
+                    <div class="settings-group">
+                        <div class="settings-item">
+                            <label>条目名称</label>
+                            <input type="text" id="entry-name" placeholder="设定名称">
+                        </div>
+                        <div class="settings-item" style="flex-direction:row; align-items:center;">
+                            <label style="flex:1">启用状态</label>
+                            <input type="checkbox" id="entry-enabled">
+                        </div>
+                        <div class="settings-item">
+                            <label>优先级</label>
+                            <input type="number" id="entry-priority" value="1">
+                        </div>
+                    </div>
+                    <div class="settings-group">
+                        <div class="settings-item">
+                            <label>触发类型</label>
+                            <select id="entry-trigger-type">
+                                <option value="keyword">关键词</option>
+                                <option value="regex">正则表达式</option>
+                            </select>
+                        </div>
+                        <div class="settings-item">
+                            <label>触发词 (英文逗号分隔)</label>
+                            <input type="text" id="entry-trigger-val">
+                        </div>
+                        <div class="settings-item">
+                            <label>触发时机</label>
+                            <select id="entry-trigger-timing">
+                                <option value="user">用户发消息</option>
+                                <option value="ai">AI发消息</option>
+                                <option value="both">双向</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="settings-group">
+                        <div class="settings-item">
+                            <label>内容</label>
+                            <textarea id="entry-content" rows="6" placeholder="注入的提示词内容"></textarea>
+                        </div>
+                    </div>
+                    <button id="delete-entry-btn" class="danger-btn" style="display:none; background:#fa5151; color:white; border:none; padding:15px; border-radius:8px; width:100%;">删除条目</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 钱包 App 界面 -->
+        <section id="wallet-app" class="screen app-screen">
+            <div class="app-header">
+                <button class="back-btn">〈 返回</button>
+                <h2 class="app-title">钱包</h2>
+                <button id="wallet-bill-btn" class="header-action" style="font-size:16px;">账单</button>
+            </div>
+            <div class="app-content">
+                <div class="wallet-card">
+                    <div class="wallet-card-label">账户余额 (元)</div>
+                    <div id="wallet-balance" class="wallet-card-value">0.00</div>
+                </div>
+                <div class="wallet-grid">
+                    <div class="wallet-menu-item" id="wallet-recharge-btn">
+                        <div class="wallet-menu-icon">💰</div>
+                        <span>充值</span>
+                    </div>
+                    <div class="wallet-menu-item">
+                        <div class="wallet-menu-icon">💸</div>
+                        <span>转账</span>
+                    </div>
+                    <div class="wallet-menu-item">
+                        <div class="wallet-menu-icon">🧧</div>
+                        <span>红包</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 充值 -->
+            <div id="recharge-modal" class="overlay">
+                <div class="app-header">
+                    <button id="close-recharge" class="back-btn">取消</button>
+                    <h2 class="app-title">充值</h2>
+                </div>
+                <div class="app-content">
+                    <div class="settings-group">
+                        <div class="settings-item">
+                            <label>充值金额 (元)</label>
+                            <input type="number" id="recharge-amount" placeholder="0.00">
+                        </div>
+                    </div>
+                    <button id="confirm-recharge-btn" class="primary-btn">确认充值</button>
+                </div>
+            </div>
+
+            <!-- 账单 -->
+            <div id="bill-overlay" class="overlay">
+                <div class="app-header">
+                    <button id="close-bill" class="back-btn">〈 返回</button>
+                    <h2 class="app-title">账单</h2>
+                </div>
+                <div id="bill-list" class="app-content">
+                    <!-- 账单列表 -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 朋友圈界面 -->
+        <section id="moments-app" class="screen app-screen">
+            <div class="app-header">
+                <button class="back-btn">〈 返回</button>
+                <h2 class="app-title">朋友圈</h2>
+                <div class="header-right" style="display:flex; gap:10px;">
+                    <button id="ai-post-moment-btn" class="header-action">🤖</button>
+                    <button id="post-moment-btn" class="header-action">📷</button>
+                </div>
+            </div>
+            <div id="moments-list" class="app-content" style="padding:0;">
+                <div class="moments-header-bg" style="height:200px; background:#ddd;"></div>
+                <div class="user-moment-info" style="display:flex; justify-content:flex-end; align-items:center; gap:10px; margin-top:-40px; padding:0 20px;">
+                    <span class="user-moment-name" style="color:white; font-weight:700; text-shadow:0 1px 2px rgba(0,0,0,0.5);">我</span>
+                    <div class="user-moment-avatar" style="width:70px; height:70px; border-radius:8px; background:white; padding:2px;"><div class="contact-avatar" style="width:100%; height:100%;">👤</div></div>
+                </div>
+                <div id="moments-items-container" style="padding-top:20px;">
+                    <!-- 列表 -->
+                </div>
+            </div>
+
+            <!-- 发布动态 -->
+            <div id="post-moment-modal" class="overlay">
+                <div class="app-header">
+                    <button id="close-post-moment" class="back-btn">取消</button>
+                    <h2 class="app-title">发动态</h2>
+                    <button id="submit-moment-btn" class="header-action" style="font-size:16px;">发表</button>
+                </div>
+                <div class="app-content">
+                    <textarea id="moment-text" rows="5" placeholder="这一刻的想法..." style="border:none; resize:none; padding:0;"></textarea>
+                    <div id="moment-image-preview" style="margin-top:20px;"></div>
+                    <label for="moment-image-input" style="width:80px; height:80px; background:#f2f2f2; display:flex; align-items:center; justify-content:center; font-size:30px; color:#ccc; border-radius:4px; cursor:pointer;">+</label>
+                    <input type="file" id="moment-image-input" accept="image/*" style="display:none">
+                </div>
+            </div>
+        </section>
+
+        <!-- 商城 App 界面 -->
+        <section id="shop-app" class="screen app-screen">
+            <div id="shop-tab-home" class="shop-tab-content active">
+                <div class="app-header">
+                    <button class="back-btn">〈 返回</button>
+                    <div style="flex:1; margin:0 10px;"><input type="text" placeholder="搜索商品" style="height:32px; font-size:13px; border-radius:16px; background:#f2f2f2; border:none;"></div>
+                    <button class="header-action" onclick="aiRefreshShop()" style="font-size:18px">✨</button>
+                </div>
+                <div class="shop-category-bar" style="display:flex; padding:10px; gap:20px; overflow-x:auto; background:white;">
+                    <span class="category-item active">推荐</span>
+                    <span class="category-item" data-cat="女装">女装</span>
+                    <span class="category-item" data-cat="数码">数码</span>
+                    <span class="category-item" data-cat="美食">美食</span>
+                </div>
+                <div id="shop-product-list" class="app-content product-grid">
+                    <!-- 商品 -->
+                </div>
+            </div>
+            
+            <!-- 其他 Tab 占位 (脚本依赖) -->
+            <div id="shop-tab-cart" class="shop-tab-content">
+                <div class="app-header"><h2 class="app-title">购物车</h2></div>
+                <div id="cart-list" class="app-content"></div>
+                <div class="cart-footer" style="padding:15px; background:white; display:flex; align-items:center; justify-content:space-between; border-top:1px solid #eee;">
+                    <div>合计: <span id="cart-total-price" style="color:var(--brand-dark); font-weight:bold;">¥0.00</span></div>
+                    <button id="cart-checkout-btn" class="primary-btn" style="width:auto; margin:0; padding:10px 25px;">结算</button>
+                </div>
+            </div>
+
+            <div id="shop-tab-profile" class="shop-tab-content">
+                <div class="app-header"><h2 class="app-title">我的商城</h2></div>
+                <div class="app-content">
+                    <div class="shop-order-nav" style="display:flex; justify-content:space-around; background:white; padding:20px; border-radius:8px;">
+                        <div class="order-nav-item" data-status="pending">📦 待收货<span id="badge-pending" class="badge" style="display:none; color:red;">0</span></div>
+                        <div class="order-nav-item" data-status="completed">✅ 已完成</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="shop-bottom-nav" style="height:50px; background:white; border-top:1px solid #eee; display:flex; justify-content:space-around; align-items:center;">
+                <div class="nav-item active" data-tab="home">🏠 首页</div>
+                <div class="nav-item" data-tab="cart">🛒 购物车</div>
+                <div class="nav-item" data-tab="profile">👤 我的</div>
+            </div>
+
+            <!-- 结算 Overlay -->
+            <div id="checkout-overlay" class="overlay">
+                <div class="app-header">
+                    <button id="close-checkout" class="back-btn">取消</button>
+                    <h2 class="app-title">确认订单</h2>
+                </div>
+                <div class="app-content">
+                    <div id="checkout-items" class="settings-group" style="padding:15px;"></div>
+                    <div style="text-align:right; font-size:18px;">实付: <span id="checkout-final-amount" style="color:var(--brand-dark); font-weight:bold;">¥0.00</span></div>
+                    <button id="confirm-pay-btn" class="primary-btn">立即支付</button>
+                </div>
+            </div>
+            
+            <!-- 订单列表 Overlay -->
+            <div id="order-list-overlay" class="overlay">
+                <div class="app-header">
+                    <button id="close-order-list" class="back-btn">〈 返回</button>
+                    <h2 id="order-list-title" class="app-title">订单列表</h2>
+                </div>
+                <div id="shop-order-items" class="app-content"></div>
+            </div>
+        </section>
+
+        <!-- 小红书 App 界面 -->
+        <section id="xhs-app" class="screen app-screen xhs-app-container">
+            <div id="xhs-main-view" class="xhs-view active" style="display:flex; flex-direction:column; height:100%;">
+                <div class="xhs-header">
+                    <button class="back-btn" style="color:var(--text-color)">〈</button>
+                    <div class="xhs-top-nav">
+                        <span class="nav-item active">发现</span>
+                        <span class="nav-item">北京</span>
+                    </div>
+                    <button id="ai-refresh-xhs-btn" class="header-action" style="font-size:18px;">🪄</button>
+                </div>
+                <div id="xhs-note-feed" class="app-content xhs-note-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                    <!-- 笔记 -->
+                </div>
+            </div>
+
+            <div id="xhs-note-detail" class="overlay">
+                <div class="app-header">
+                    <button class="close-btn back-btn">〈 返回</button>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <div class="author-avatar" style="width:30px; height:30px; border-radius:50%; background:#eee; display:flex; align-items:center; justify-content:center; font-size:14px;"></div>
+                        <span class="author-name" style="font-size:14px; font-weight:700;"></span>
+                    </div>
+                </div>
+                <div class="app-content" style="padding:0;">
+                    <div class="xhs-note-images" style="width:100%; aspect-ratio:3/4;"></div>
+                    <div style="padding:15px;">
+                        <h3 class="note-title" style="margin-bottom:10px;"></h3>
+                        <p class="note-desc" style="font-size:14px; line-height:1.6; color:#333;"></p>
+                        <div class="note-date" style="font-size:12px; color:#999; margin-top:15px;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 其他 XHS Tab 略，保证不报错 -->
+            <div id="xhs-market-view" class="xhs-view"></div>
+            <div id="xhs-message-view" class="xhs-view"></div>
+            <div id="xhs-profile-view" class="xhs-view"></div>
+
+            <div class="xhs-bottom-nav" style="height:50px; background:white; display:flex; justify-content:space-around; align-items:center; border-top:1px solid #eee;">
+                <div class="nav-item active" data-view="main">首页</div>
+                <div class="nav-item" data-view="market">商城</div>
+                <div class="nav-item" data-view="post" style="background:#ff2442; color:white; width:40px; height:30px; border-radius:8px; display:flex; align-items:center; justify-content:center;">+</div>
+                <div class="nav-item" data-view="message">消息</div>
+                <div class="nav-item" data-view="profile">我</div>
+            </div>
+        </section>
+
+        <!-- 浏览器 App 界面 -->
+        <section id="browser-app" class="screen app-screen">
+            <div class="app-header browser-header">
+                <button class="back-btn">桌面</button>
+                <div class="browser-address-bar">
+                    <input type="text" id="browser-url" placeholder="输入网址" value="https://little-phone.com">
+                </div>
+                <button id="browser-refresh-btn" class="header-action" style="font-size:18px">↻</button>
+            </div>
+            <div class="app-content browser-content">
+                <div id="browser-loading-spinner" style="display:none; justify-content:center; padding:50px;">⌛ 加载中...</div>
+                <div id="browser-iframe-sim" style="height:100%; padding:20px;"></div>
+            </div>
+        </section>
+
+        <!-- 角色手机数据查看界面 -->
+        <div id="role-phone-overlay" class="overlay role-phone-view">
+            <div class="app-header">
+                <button id="close-role-phone" class="back-btn">〈 返回</button>
+                <h2 id="role-phone-owner" class="app-title">角色手机</h2>
+                <button id="ai-refresh-phone-data" class="header-action" title="AI 刷新数据">🪄</button>
+            </div>
+            <div class="app-content" style="background: #f0f0f0;">
+                <div class="role-phone-status-card">
+                    <div class="usage-summary">
+                        <div class="usage-main">
+                            <span class="usage-label">今日使用时长</span>
+                            <span id="role-phone-usage-total" class="usage-value">0h 0m</span>
+                        </div>
+                        <div class="usage-chart">
+                            <div class="chart-bar" style="height: 60%"></div>
+                            <div class="chart-bar" style="height: 80%"></div>
+                            <div class="chart-bar" style="height: 40%"></div>
+                            <div class="chart-bar" style="height: 90%"></div>
+                            <div class="chart-bar" style="height: 50%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="role-phone-modules">
+                    <div class="phone-module">
+                        <div class="module-header">📊 APP 使用排行</div>
+                        <div id="role-phone-app-ranking" class="module-content"></div>
+                    </div>
+                    <div class="phone-module">
+                        <div class="module-header">🌐 浏览器历史</div>
+                        <div id="role-phone-browser-history" class="module-content"></div>
+                    </div>
+                    <div class="phone-module">
+                        <div class="module-header">📝 备忘录</div>
+                        <div id="role-phone-notes" class="module-content"></div>
+                    </div>
+                    <div class="phone-module">
+                        <div class="module-header">💰 账单明细</div>
+                        <div id="role-phone-bills" class="module-content"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RP 高级设定 Overlay -->
+        <div id="rp-adv-settings-overlay" class="overlay">
+            <div class="app-header">
+                <button id="close-rp-adv" class="back-btn">取消</button>
+                <h2 class="app-title">高级写作设定</h2>
+                <button id="save-rp-adv" class="header-action">保存</button>
+            </div>
+            <div class="app-content">
+                <div class="settings-group">
+                    <div class="settings-item">
+                        <label>回复字数目标: <span id="rp-word-count-val">300字</span></label>
+                        <input type="range" id="rp-word-count" min="50" max="1000" step="50" value="300">
+                    </div>
+                    <div class="settings-item">
+                        <label>叙事视角</label>
+                        <select id="rp-perspective">
+                            <option value="first">第一人称</option>
+                            <option value="third">第三人称</option>
+                            <option value="auto">自动识别</option>
+                        </select>
+                    </div>
+                    <div class="settings-item">
+                        <label>AI 主动性</label>
+                        <select id="rp-initiative">
+                            <option value="low">被动回应</option>
+                            <option value="mid">正常互动</option>
+                            <option value="high">主动推进</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="settings-group">
+                    <div class="settings-item">
+                        <label>对话比例 (%)</label>
+                        <input type="number" id="rp-dialogue-ratio" value="40">
+                    </div>
+                    <div class="settings-item">
+                        <label>描写比例 (%)</label>
+                        <input type="number" id="rp-desc-ratio" value="60">
+                    </div>
+                    <div class="settings-item">
+                        <label>修辞密度 (%)</label>
+                        <input type="number" id="rp-rhetoric-density" value="30">
+                    </div>
+                </div>
+                <div class="settings-group">
+                    <div class="settings-item">
+                        <label>叙事节奏</label>
+                        <div style="display:flex; gap:15px;">
+                            <label><input type="radio" name="rp-tempo" value="slow"> 缓慢</label>
+                            <label><input type="radio" name="rp-tempo" value="mid" checked> 适中</label>
+                            <label><input type="radio" name="rp-tempo" value="fast"> 紧凑</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="settings-group">
+                    <div class="settings-item">
+                        <label>风格提示词 (Style Prompt)</label>
+                        <textarea id="rp-style-prompt" rows="3" placeholder="如：忧郁文青风、充满意识流描写..."></textarea>
+                    </div>
+                    <div class="settings-item">
+                        <label>负面提示词 (Forbidden)</label>
+                        <input type="text" id="rp-forbidden-words" placeholder="禁止出现的词汇/情节">
+                    </div>
+                </div>
+                <div class="settings-group">
+                    <div class="settings-item">
+                        <label>当前场景设定</label>
+                        <input type="text" id="rp-current-scene" placeholder="如：深夜的雨中车站">
+                    </div>
+                    <div class="settings-item">
+                        <label>当前氛围描述</label>
+                        <input type="text" id="rp-current-atmosphere" placeholder="如：压抑、浪漫、轻松">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 消息操作菜单 -->
+        <div id="msg-action-menu" class="msg-action-menu" style="display:none; position:fixed; z-index:10000; background:white; box-shadow:0 2px 10px rgba(0,0,0,0.2); border-radius:8px; padding:8px 0; min-width:120px;">
+            <div class="menu-item" data-action="copy" style="padding:10px 16px; cursor:pointer; font-size:14px;">复制</div>
+            <div class="menu-item" data-action="modify" style="padding:10px 16px; cursor:pointer; font-size:14px;">修改</div>
+            <div class="menu-item" data-action="rollback" style="padding:10px 16px; cursor:pointer; font-size:14px;">回退到此</div>
+            <div class="menu-item" data-action="branch" style="padding:10px 16px; cursor:pointer; font-size:14px;">开启平行时空</div>
+        </div>
+
+        <!-- 添加联系人弹窗 -->
+        <div id="add-contact-modal" class="overlay">
+            <div class="app-header">
+                <button class="back-btn">取消</button>
+                <h2 class="app-title">添加联系人</h2>
+                <button id="save-contact-btn" class="header-action">保存</button>
+            </div>
+            <div class="app-content">
+                <div class="settings-group">
+                    <div class="settings-item">
+                        <label>头像</label>
+                        <div style="display:flex; align-items:center; gap:15px;">
+                            <div id="contact-avatar-preview" class="contact-avatar">👤</div>
+                            <label for="contact-avatar-upload" class="secondary-btn" style="background:var(--secondary-bg); padding:8px 15px; border-radius:4px; font-size:14px; cursor:pointer;">上传</label>
+                            <input type="file" id="contact-avatar-upload" accept="image/*" style="display:none">
+                        </div>
+                    </div>
+                    <div class="settings-item">
+                        <label>昵称</label>
+                        <input type="text" id="contact-nickname" placeholder="联系人昵称">
+                    </div>
+                    <div class="settings-item">
+                        <label>人设/简介</label>
+                        <textarea id="contact-bio" rows="4" placeholder="设置 AI 的性格、说话风格..."></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 创建群聊弹窗 -->
+        <div id="create-group-modal" class="overlay">
+            <div class="app-header">
+                <button class="back-btn">取消</button>
+                <h2 class="app-title">发起群聊</h2>
+                <button id="save-group-btn" class="header-action">确定</button>
+            </div>
+            <div class="app-content">
+                <div class="settings-group">
+                    <div class="settings-item">
+                        <label>群聊名称</label>
+                        <input type="text" id="group-name" placeholder="取个群名吧">
+                    </div>
+                </div>
+                <div id="group-member-select-list" class="chat-list-content">
+                    <!-- 成员选择列表 -->
+                </div>
+            </div>
+        </div>
+
+        <!-- 转账弹窗 -->
+        <div id="transfer-modal" class="overlay">
+            <div class="app-header">
+                <button class="back-btn">取消</button>
+                <h2 class="app-title">转账</h2>
+            </div>
+            <div class="app-content" style="text-align:center; padding-top:40px;">
+                <div id="transfer-target-avatar" class="contact-avatar" style="width:60px; height:60px; margin:0 auto 10px;">👤</div>
+                <h3 id="transfer-target-name">联系人</h3>
+                <div class="transfer-input-box" style="margin:40px 0;">
+                    <div style="font-size:14px; text-align:left; margin-bottom:10px;">转账金额</div>
+                    <div style="display:flex; align-items:flex-end; border-bottom:1px solid #eee; padding-bottom:10px;">
+                        <span style="font-size:30px; margin-right:10px;">¥</span>
+                        <input type="number" id="transfer-amount" style="border:none; font-size:40px; padding:0; height:auto;">
+                    </div>
+                </div>
+                <input type="text" id="transfer-note" placeholder="添加转账说明" style="background:#f7f7f7; border:none; margin-bottom:40px;">
+                <button id="confirm-transfer-btn" class="primary-btn" style="background:#07c160;">转账</button>
+            </div>
+        </div>
+
+        <!-- 红包弹窗 -->
+        <div id="redpacket-modal" class="overlay">
+            <div class="app-header">
+                <button class="back-btn">取消</button>
+                <h2 class="app-title">发红包</h2>
+            </div>
+            <div class="app-content" style="background:#f2f2f2;">
+                <div class="settings-group">
+                    <div class="settings-item" style="flex-direction:row; align-items:center;">
+                        <label style="flex:1">红包个数</label>
+                        <input type="number" id="rp-count" value="1" style="width:80px; text-align:right; border:none;">
+                        <span style="margin-left:10px;">个</span>
+                    </div>
+                    <div class="settings-item" style="flex-direction:row; align-items:center;">
+                        <label style="flex:1">总金额</label>
+                        <input type="number" id="rp-amount" placeholder="0.00" style="width:100px; text-align:right; border:none;">
+                        <span style="margin-left:10px;">元</span>
+                    </div>
+                </div>
+                <div class="settings-group">
+                    <div class="settings-item">
+                        <textarea id="rp-note" placeholder="恭喜发财，大吉大利" style="border:none; resize:none; padding:0;"></textarea>
+                    </div>
+                </div>
+                <button id="confirm-rp-btn" class="primary-btn" style="background:#fa5151; margin-top:40px;">塞钱进红包</button>
+            </div>
+        </div>
+
+        <!-- 领取红包 Overlay -->
+        <div id="rp-open-overlay" class="overlay" style="background:rgba(0,0,0,0.5); justify-content:center; align-items:center;">
+            <div class="rp-card" style="background:#fa5151; width:280px; height:400px; border-radius:12px; position:relative; display:flex; flex-direction:column; align-items:center; color:#f8e7a6; padding-top:40px;">
+                <button id="close-rp-card" style="position:absolute; top:10px; left:10px; background:none; border:none; color:#f8e7a6; font-size:20px;">×</button>
+                <div id="rp-sender-avatar" class="contact-avatar" style="width:50px; height:50px; border:2px solid #f8e7a6;">👤</div>
+                <h4 id="rp-sender-name" style="margin-top:10px;">联系人</h4>
+                <p style="opacity:0.8; font-size:13px; margin-top:5px;">发了一个红包</p>
+                <h2 id="rp-note-display" style="margin-top:20px; font-size:18px;">恭喜发财，大吉大利</h2>
+                
+                <div id="rp-open-btn" style="width:80px; height:80px; background:#f8e7a6; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fa5151; font-size:30px; font-weight:700; cursor:pointer; margin-top:auto; margin-bottom:60px; box-shadow:0 4px 10px rgba(0,0,0,0.2);">開</div>
+                
+                <div id="rp-result" style="display:none; text-align:center; margin-top:auto; margin-bottom:60px;">
+                    <span style="font-size:14px;">已存入零钱</span>
+                    <div style="font-size:40px; font-weight:700; margin-top:10px;"><span id="rp-opened-amount">0.00</span><span style="font-size:16px; margin-left:5px;">元</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 评价弹窗 -->
+        <div id="rating-modal" class="overlay">
+            <div class="app-header">
+                <button id="cancel-rating" class="back-btn">取消</button>
+                <h2 class="app-title">商品评价</h2>
+                <button id="submit-rating" class="header-action">发布</button>
+            </div>
+            <div class="app-content">
+                <div class="star-rating" style="display:flex; justify-content:center; gap:10px; margin:30px 0; font-size:30px;">
+                    <span class="star" data-value="1">☆</span>
+                    <span class="star" data-value="2">☆</span>
+                    <span class="star" data-value="3">☆</span>
+                    <span class="star" data-value="4">☆</span>
+                    <span class="star" data-value="5">☆</span>
+                </div>
+                <textarea id="rating-text" rows="5" placeholder="分享你的使用心得..." style="background:#f7f7f7; border:none;"></textarea>
+            </div>
+        </div>
+
+        <!-- 售后弹窗 -->
+        <div id="aftersale-modal" class="overlay">
+            <div class="app-header">
+                <button id="cancel-aftersale" class="back-btn">取消</button>
+                <h2 class="app-title">申请售后</h2>
+            </div>
+            <div class="app-content">
+                <div class="settings-group">
+                    <div class="settings-item">
+                        <label>售后理由</label>
+                        <select id="aftersale-reason">
+                            <option value="quality">质量问题</option>
+                            <option value="not-as-described">与描述不符</option>
+                            <option value="wrong-item">发错货</option>
+                            <option value="other">其他</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="settings-group">
+                    <div class="settings-item">
+                        <label>详细说明</label>
+                        <textarea id="aftersale-desc" rows="5" placeholder="请详细描述您遇到的问题..."></textarea>
+                    </div>
+                </div>
+                <button id="confirm-aftersale" class="primary-btn">提交申请</button>
+            </div>
+        </div>
+
+        <!-- 小红书发笔记弹窗 -->
+        <div id="xhs-post-modal" class="overlay">
+            <div class="app-header">
+                <button class="close-btn back-btn">取消</button>
+                <h2 class="app-title">发笔记</h2>
+                <button id="xhs-submit-post" class="header-action" style="color:#ff2442;">发布</button>
+            </div>
+            <div class="app-content">
+                <input type="text" id="xhs-post-title" placeholder="填写标题" style="border:none; font-size:18px; font-weight:700; margin-bottom:10px; border-bottom:1px solid #eee; border-radius:0;">
+                <textarea id="xhs-post-desc" rows="10" placeholder="添加正文" style="border:none; resize:none; padding:0;"></textarea>
+            </div>
+        </div>
+
+        <!-- 小红书私聊窗口 -->
+        <div id="xhs-chat-window" class="overlay">
+            <div class="app-header">
+                <button class="close-btn back-btn">〈 返回</button>
+                <h2 class="xhs-chat-name app-title">联系人</h2>
+            </div>
+            <div class="xhs-chat-messages app-content" style="background:#f8f8f8; display:flex; flex-direction:column; gap:10px;">
+                <!-- 私聊内容 -->
+            </div>
+            <div class="xhs-chat-input-row" style="padding:10px; background:white; display:flex; gap:10px; border-top:1px solid #eee;">
+                <input type="text" id="xhs-chat-input" placeholder="发消息..." style="flex:1; border-radius:20px; background:#f2f2f2; border:none; padding:0 15px;">
+                <button id="xhs-send-btn" style="color:#ff2442; background:none; border:none; font-weight:700;">发送</button>
+            </div>
+        </div>
+
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+]]>
